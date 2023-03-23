@@ -50,13 +50,19 @@ class CounterView extends StatelessWidget {
       //change theme mode in floating action button
       floatingActionButton: FloatingActionButton(
         key: const Key('counterView_theme_floatingActionButton'),
-        child: const Icon(Icons.brightness_6_rounded),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return Icon(state.themeMode != ThemeMode.dark
+                ? Icons.brightness_4_rounded
+                : Icons.brightness_7_rounded);
+          },
+        ),
         onPressed: () {
           final themeMode = context.read<ThemeCubit>().state.themeMode;
           if (themeMode != ThemeMode.dark) {
-            context.read<ThemeCubit>().changeTheme(ThemeMode.light);
-          } else {
             context.read<ThemeCubit>().changeTheme(ThemeMode.dark);
+          } else {
+            context.read<ThemeCubit>().changeTheme(ThemeMode.light);
           }
         },
       ),
